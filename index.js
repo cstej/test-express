@@ -1,8 +1,10 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
+const cors = require('cors');
 
 const app = express();
+app.use(cors({origin: '*'}));
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server});
 
@@ -19,6 +21,8 @@ const sendMessageToAll = (message) => {
     }
   });
 }
+
+app.use(express.json());
 
 app.post('/messages', (req, res) => {
   const message = req.body.message;
